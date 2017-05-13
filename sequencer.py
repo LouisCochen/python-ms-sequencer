@@ -36,18 +36,18 @@ AA_MW = {'G':57,'A':71,'S':87,'P':97,'V':99,'T':101,'C':103,
 #PROJECT : OCR with Tesseract from Google and pyOCR to bind it.
 # I found : https://pythontips.com/2016/02/25/ocr-on-pdf-files-using-python/
 
-#peaks_input = input('Write your MS/MS peaks values separated by a space :\n')
-#peaks_list = list(map(int, peaks_input.split(' ')))
+peaks_input = input('Write your MS/MS peaks values separated by a space :\n')
+peaks_list = list(map(int, peaks_input.split(' ')))
 
-peaks_list=[101, 129, 147, 202, 230, 260, 273, 301, 342, 373, 386, 414,
-            485,495, 502, 513, 601, 624, 642, 656, 714, 727, 755, 785,
-            801, 840, 868, 886, 1014]
+#peaks_list=[101, 129, 147, 202, 230, 260, 273, 301, 342, 373, 386, 414,
+#            485,495, 502, 513, 601, 624, 642, 656, 714, 727, 755, 785,
+#            801, 840, 868, 886, 1014]
 #peaks_list=[147,204,218,234,261,275,289,291,305]#Not actually peaks, good test
 
 ####    INPUT MOLECULAR ION M/Z
-#mol=int(input('\nWrite the m/z of the molecular ion :\n'))
+mol=int(input('\nWrite the m/z of the molecular ion :\n'))
 
-mol=1014
+#mol=1014
 #mol=305
 
 ####    START
