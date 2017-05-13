@@ -21,8 +21,6 @@
 # $K===================!                 BAD    mass!=mol
 # $K===========================!         BAD    mass!=mol
 # $K==================================$  GOOD   mass==mol
-#
-# Hey Mira :)
 
 from timeit import default_timer as timer
 
@@ -149,7 +147,6 @@ print('list_multi : ',list_multi)#dev
 print('\nThe sequence is',len(seq),'residues long.')
 
 ####    END
-#Timing is the coolest thing in coding !
+#Timing is the coolest thing !
 end=timer()
-time=end-start
-print ('\nDone in {0} secs.'.format(time))
+print ('\nDone in {0} secs.'.format(end-start))
