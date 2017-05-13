@@ -39,7 +39,8 @@ AA_MW = {'G':57,'A':71,'S':87,'P':97,'V':99,'T':101,'C':103,
 peaks_list=[]
 while peaks_list==[]:
     in_mode=input('Input type : .txt file (F) or manual (M)?')
-    if in_mode=='F':#file input
+# file input
+    if in_mode=='F':
         filename=input('What is the name of your file ? ')#get name of file
         filename=filename+'.txt'
         with open(filename, "rt", encoding='utf-8') as peaks_file:#open file copy text
@@ -47,31 +48,35 @@ while peaks_list==[]:
                 for peak in line:
                     peaks_list.append(peak)
         peaks_file.close()
-    elif in_mode=='M':#manual input
+    elif in_mode=='M':
+#manual input
         peaks_input = input('Write your MS/MS peaks values separated by a space :\n')
         peaks_list = list(map(int, peaks_input.split(' ')))
     elif in_mode!=='F' and in_mode=='M':
         print('Please enter F for .txt file or M for manual.')
     pass
 
-#peaks_list=[101, 129, 147, 202, 230, 260, 273, 301, 342, 373, 386, 414,
-#            485,495, 502, 513, 601, 624, 642, 656, 714, 727, 755, 785,
-#            801, 840, 868, 886, 1014]
-#peaks_list=[147,204,218,234,261,275,289,291,305]#Not actually peaks, good test
+# List of peaks useful for troubleshooting, first list is made of actual results,
+# second list needs update to work with the new verif step.
+
+'''peaks_list=[101, 129, 147, 202, 230, 260, 273, 301, 342, 373, 386, 414,
+            485,495, 502, 513, 601, 624, 642, 656, 714, 727, 755, 785,
+            801, 840, 868, 886, 1014]
+mol=1014'''
+
+'''peaks_list=[147,204,218,234,261,275,289,291,305]
+mol=305'''
 
 ####    INPUT MOLECULAR ION M/Z
 mol=int(input('\nWrite the m/z of the molecular ion :\n'))
-
-#mol=1014
-#mol=305
 
 ####    START
 start = timer()
 if mol not in peaks_list:
     peaks_list.append(mol)
-peaks_list.append(1)#for the H+ on th efirst b ion
+peaks_list.append(1)#for the H+ on the first b ion
 peaks_list.sort()
-peaks_list_original=peaks_list
+#peaks_list_original=peaks_list #not used yet
 
 ####    CONFIRM TO USER
 print ('\nYour values are : ',', '.join(map(str,peaks_list)),
