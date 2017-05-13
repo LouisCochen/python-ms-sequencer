@@ -10,18 +10,20 @@ It is still version 0.0.1, far from finished but works in most occasions (high s
 It reads from an input of peaks obtained in the MS/MS experiment.
 
 The sequencing works as follows :
-1 - initiation :  > finding K or R as the C-term amino acid
-                  > starting wirting the sequence
-                  > add the m/z list of both y" and b ion of R/K
+>  1 - initiation :  
+- finding K or R as the C-term amino acid
+- starting wirting the sequence
+- add the m/z list of both y" and b ion of R/K
                   
-2 - sequencing :  > using the m/z of y"(n) and b(n) ion + m/z of residues (stored in the dictionnaries),
-                    look for the possible amino acids going C to N termini.
-                  > if only one if found, add to sequence, add the m/z to list for y" and b ion
+>  2 - sequencing :  
+- using the m/z of y"(n) and b(n) ion + m/z of residues (stored in the dictionnaries), look for the possible amino acids going C to N termini.
+- if only one if found, add to sequence, add the m/z to list for y" and b ion
 
-3 - termination : > when m/z(y" ions) = m/z of molecular ions or m/z(b ions) = 1 stop sequencing
-                  > create values for m/z of the ions found
-                  > search for a ions
-                  > output + timer
+>  3 - termination : 
+- when m/z(y" ions) = m/z of molecular ions or m/z(b ions) = 1 stop sequencing
+- create values for m/z of the ions found
+- search for a ions
+- output + timer
 
 This version will work for most of the easy sequencing.
 
