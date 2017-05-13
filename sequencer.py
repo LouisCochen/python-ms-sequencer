@@ -33,11 +33,26 @@ AA_MW = {'G':57,'A':71,'S':87,'P':97,'V':99,'T':101,'C':103,
 
 ####    INPUT PEAKS
 
-#PROJECT : OCR with Tesseract from Google and pyOCR to bind it.
+# PROJECT : OCR with Tesseract from Google and pyOCR to bind it.
 # I found : https://pythontips.com/2016/02/25/ocr-on-pdf-files-using-python/
 
-peaks_input = input('Write your MS/MS peaks values separated by a space :\n')
-peaks_list = list(map(int, peaks_input.split(' ')))
+peaks_list=[]
+while peaks_list==[]:
+    in_mode=input('Input type : .txt file (F) or manual (M)?')
+    if in_mode=='F':#file input
+        filename=input('What is the name of your file ? ')#get name of file
+        filename=filename+'.txt'
+        with open(filename, "rt", encoding='utf-8') as peaks_file:#open file copy text
+            for line in peaks_file:
+                for peak in line:
+                    peaks_list.append(peak)
+        peaks_file.close()
+    elif in_mode=='M':#manual input
+        peaks_input = input('Write your MS/MS peaks values separated by a space :\n')
+        peaks_list = list(map(int, peaks_input.split(' ')))
+    elif in_mode!=='F' and in_mode=='M':
+        print('Please enter F for .txt file or M for manual.')
+    pass
 
 #peaks_list=[101, 129, 147, 202, 230, 260, 273, 301, 342, 373, 386, 414,
 #            485,495, 502, 513, 601, 624, 642, 656, 714, 727, 755, 785,
@@ -62,7 +77,7 @@ peaks_list_original=peaks_list
 print ('\nYour values are : ',', '.join(map(str,peaks_list)),
        '.\n\nm/z(molecular ion) = ',mol,'\n')
 
-####    INITIATION OF SEQUENCING Y1 = K or R, 
+####    INITIATION OF SEQUENCING Y1 = K or R,
 mol_b=mol-18 #mol-18 for calculating b ions
 if 147 in peaks_list and (mol_b-128) in peaks_list:
     print('Y1=K')#dev
@@ -106,7 +121,7 @@ while mass_y!=mol and mass_b!=1:
         print('failed')#dev
         break   #Get the next peak from the last multi.
                 #i.e. 275 and make it mass, restart sequencing
-#NEXT : When last multi doesn't work, use previous.
+# NEXT : When last multi doesn't work, use previous.
     elif len(multi_peaks_y)==1 and len(multi_peaks_b)==1:
         mass_y=multi_peaks_y[0]
         mass_b=multi_peaks_b[0]
@@ -141,7 +156,7 @@ print('final peaks :',peaks_list)
 
 print('m y :',mass_y_list,'\nm b :',mass_b_list,'\nm a :',mass_a_list)#dev
 
-    
+
 ####    OUTPUT
 print('list_multi : ',list_multi)#dev
 print('\nThe sequence is',len(seq),'residues long.')
