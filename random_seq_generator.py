@@ -12,7 +12,7 @@ mb=[]
 length=input('length : ')
 
 #create pseudo-random sequence
-for i in range(int(length)):
+for i in range(int(length)-1):
     seq.append(random.choice(list(dict2.keys())))
     #print(random.choice(list(dict2.keys())))
 #add pseudo random C-term
