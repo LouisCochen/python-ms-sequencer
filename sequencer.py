@@ -82,6 +82,7 @@ while peaks_list==[]:
 # 704,311,125,890 are added to create a branch
 # The sequence is :['K', 'I/L', 'I/L', 'E', 'V', 'I/L', 'A', 'T', 'K/Q']
 # The branch is :                                'C', 'W'
+
 #peaks_list=[101, 129, 147, 202, 230, 260, 273, 301, 342, 373, 386, 414,
 #            485,495, 502, 513, 601, 624, 642, 656, 714, 727, 755, 785,
 #            801, 840, 868, 886, 1014,704,311,125,890]
@@ -134,7 +135,7 @@ while mass_y!=mol and mass_b!=1:
     for x in sorted(MW_AA.keys()):
         #print('mass_y+x :',mass_y+x,'mass_b :',mass_b-x,'// x :',x)#dev
         if mass_y+x in peaks_list and mass_b-x in peaks_list:
-            print('peak found')#dev
+            #print('in peaks_list')#dev
             readings[mass_y][1].append(mass_y+x)
             readings[mass_y][2].append(mass_b-x)
             readings[mass_y][3].append(MW_AA[x])
@@ -177,7 +178,7 @@ while mass_y!=mol and mass_b!=1:
                 pass
             #print('multiple',multiple)
             #delete the first reading after the branch
-            #print(readings)#dev
+            print(readings)
             del readings[mass_y][1][0]
             del readings[mass_y][2][0]
             del readings[mass_y][3][0]
@@ -195,12 +196,12 @@ while mass_y!=mol and mass_b!=1:
 
 ####    CALCULATING M/Z OF IONS
 #print('seq :',seq)
-for n in sorted(readings.keys()):
+for n in range(len(seq)-1):
 # m/z of y" ions
-    masses_dict['y'].append(readings[n][1][0])
+    masses_dict['y'].append(masses_dict['y'][n]+AA_MW[seq[n+1]])
     peaks_list.remove(masses_dict['y'][-1])
 # m/z of b ions
-    masses_dict['b'].append(readings[n][2][0])
+    masses_dict['b'].append(masses_dict['b'][n]-AA_MW[seq[n+1]])
     peaks_list.remove(masses_dict['b'][-1])
     pass
 #print(masses_dict['y'],masses_dict['b'])#dev
@@ -210,46 +211,25 @@ masses_dict['b'].remove(1)
 masses_dict['b'].insert(0,mol)
 # m/z of a ions
 finding_ions(peaks_list,seq,masses_dict['b'],'a',-28)
-# NEXT 1 : these have to be present in the ion not the whole seq
+# NEXT : thes have to be present in the ion not the whole seq
 # m/z of ions with H2O loss
 if any(STED in residue for residue in seq for STED in 'STED'):
-    first_STED=len(seq)
-    last_STED=0
-    for STED in 'STED':
-        if seq.index(STED)<first_STED:
-            first_STED=seq.index[STED]
-            pass
-        if list(reversed(seq)).index(STED)>last_STED:
-            last_STED=list(reversed(seq)).index(STED)
-            pass
-        pass
-    print('first_STED',first_STED)
-    finding_ions(peaks_list,seq[:last_STED+1],masses_dict['y'][:last_STED+1],'y-H2O',-18)
-    finding_ions(peaks_list,seq[first_STED:],masses_dict['b'][first_STED:],'b-H2O',-18)
-    finding_ions(peaks_list,seq[first_STED:],masses_dict['a'][first_STED:],'a-H2O',-18)
+    finding_ions(peaks_list,seq,masses_dict['y'],'y-H2O',-18)
+    finding_ions(peaks_list,seq,masses_dict['b'],'b-H2O',-18)
+    finding_ions(peaks_list,seq,masses_dict['a'],'a-H2O',-18)
     pass
 # m/z of ions with NH3 loss
 if any(RKNQ in residue for residue in seq for RKNQ in 'RKNQ'):
-    first_RKNQ=len(seq)
-    last_RKNQ=0
-    for RKNQ in 'RKNQ':
-        if seq.index(RKNQ)<first_RKNQ:
-            first_RKNQ=seq.index[RKNQ]
-            pass
-        if list(reversed(seq)).index(RKNQ)>last_RKNQ:
-            last_RKNQ=list(reversed(seq)).index(RKNQ)
-            pass
-        pass
-    finding_ions(peaks_list,seq[:last_RKNQ+1],masses_dict['y'][:last_RKNQ+1],'y-NH3',-17)
-    finding_ions(peaks_list,seq[first_RKNQ:],masses_dict['b'][first_RKNQ:],'b-NH3',-17)
-    finding_ions(peaks_list,seq[first_RKNQ:],masses_dict['a'][first_RKNQ:],'a-NH3',-17)
+    finding_ions(peaks_list,seq,masses_dict['y'],'y-NH3',-17)
+    finding_ions(peaks_list,seq,masses_dict['b'],'b-NH3',-17)
+    finding_ions(peaks_list,seq,masses_dict['a'],'a-NH3',-17)
     pass
 ####    OUTPUT
-# NEXT 2 : do not display lists that are empty
+# NEXT : do not display lists that are empty
 #if all(0==value for value in masses_dict['y-NH3']):
 #    print('y-NH3 is empty')
 
-print('final peaks :',peaks_list)#dev
+#print('final peaks :',peaks_list)#dev
 #print('seq',seq)#dev
 #print(readings)#dev
 print('\n{0:<3}{1:<5}{2:<7}{3:<7}{4:<7}{5:<7}{6:<7}{7:<7}{8:<7}{9:<7}{10:<7}'
